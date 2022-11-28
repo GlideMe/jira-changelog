@@ -266,6 +266,9 @@ export default class Jira {
 
     const type = ticket.fields.issuetype.name;
     const {includeIssueTypes, excludeIssueTypes} = this.config.jira;
+    if (process.env.JIRA_COMPONENT) {
+         return ticket.fields.components.some(i => i.name === process.env.JIRA_COMPONENT);
+    }
     if (Array.isArray(includeIssueTypes) && includeIssueTypes.length) {
       return includeIssueTypes.includes(type);
     }
